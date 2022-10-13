@@ -1,0 +1,43 @@
+<template>
+    <v-container fluid fill-height>
+        <v-layout align-center justify-center>
+            <v-flex xs12 sm8 md4>
+                <v-card>
+                    <v-tabs fixed-tabs background-color="primary">
+                        <v-tab>
+                            Login
+                        </v-tab>
+                        <v-tab>
+                            Registrar-se
+                        </v-tab>
+                        <v-tab-item>
+                            <template>
+                                <sign-in />
+                            </template>
+                        </v-tab-item>
+                        <v-tab-item>
+                            <template>
+                                <sign-up />
+                            </template>
+                        </v-tab-item>
+                    </v-tabs>
+                </v-card>
+            </v-flex>
+        </v-layout>
+    </v-container>
+</template>
+  
+<script>
+import SignIn from '../components/SignIn.vue'
+import SignUp from '../components/SignUp.vue'
+
+export default {
+    components: {
+        SignIn,
+        SignUp
+    },
+    data() {
+        return {}
+    },
+}
+</script>
