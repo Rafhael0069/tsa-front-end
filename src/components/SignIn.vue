@@ -1,22 +1,28 @@
 <template>
     <v-card>
         <v-card-text>
-            <v-img :src="require('../assets/logo.png')" class="my-3" contain height="190" />
-            <v-form @submit.prevent="" v-model="valid">
+            <v-alert :value="erroAlert" color="red" elevation="3" outlined type="warning">{{messageError}}</v-alert>
+            <v-progress-linear :active="loading" :indeterminate="loading" absolute top height="6">
+            </v-progress-linear>
+            <v-img :src="require('../assets/img/logo.png')" class="my-3" contain height="190" />
+            <v-form @submit.prevent="auth" v-model="valid">
                 <v-text-field prepend-icon="mail_outline" name="userEmail" label="E-mail" type="text"
                     :rules="[rules.required, rules.email]" v-model="userAuth.userEmail">
                 </v-text-field>
-                <v-text-field prepend-icon="password" name="encryptedPassword" label="Senha"
+                <v-text-field prepend-icon="password" name="userPassword" label="Senha"
                     :rules="[rules.required, rules.min ]" :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
                     :type="show1 ? 'text' : 'password'" @click:append="show1 = !show1" v-model="userAuth.userPassword">
                 </v-text-field>
-                <v-btn :disabled="!valid" block color="primary" elevation="6" type="submit">Entrar</v-btn>
+                <v-btn :disabled="!valid" block color="primary" elevation="6" type="submit">
+                    Entrar</v-btn>
             </v-form>
         </v-card-text>
     </v-card>
 </template>
    
 <script>
+
+import Auth from "../services/auth"
 
 export default {
     data() {
@@ -25,6 +31,9 @@ export default {
                 userEmail: "",
                 userPassword: ""
             },
+            messageError: "",
+            loading: false,
+            erroAlert: false,
             show1: false,
             valid: false,
             rules: {
@@ -38,6 +47,28 @@ export default {
         }
     },
     methods: {
-    }
+        async auth() {
+            this.loading = true
+            try {
+                const res = await Auth.signin(this.userAuth)
+                if (res.status == 200) {
+                    this.loading = false
+                    this.$router.push('/home')    
+                }
+            } catch (error) {
+                const response = error.response
+                this.loading = false
+                this.erroAlert = true
+                this.messageError = response.data
+                console.log(response.data)
+            }
+        }
+    },
+    watch: {
+        erroAlert(val) {
+            if (!val) return
+            setTimeout(() => (this.erroAlert = false), 3000)
+        }
+    },
 }
 </script>

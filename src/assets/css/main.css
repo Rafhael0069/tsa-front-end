@@ -1,0 +1,16 @@
+.container.fill-height {
+    background-image: url("../img/background.jpg");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: 1370px 100%;
+}
+
+.v-application .error--text {
+    color: #dcff17 !important;
+    caret-color: #dcff17 !important;
+}
+
+.v-application .primary--text {
+    color: #00ca00 !important;
+    caret-color: #00ca00 !important;
+}
