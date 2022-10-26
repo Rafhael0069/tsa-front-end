@@ -1,4 +1,4 @@
-.container.fill-height {
+/* .container.fill-height {
     background-image: url("../img/background.jpg");
     background-repeat: no-repeat;
     background-attachment: fixed;
@@ -14,3 +14,17 @@
     color: #00ca00 !important;
     caret-color: #00ca00 !important;
 }
+
+.intro {
+  display: flex;
+  justify-content: center;
+  margin: 4rem 0;
+}
+
+a {
+  color: inherit;
+}
+
+.text-center {
+  text-align: center;
+} */

@@ -1,26 +1,61 @@
-import Vue from 'vue'
-import VueRouter from 'vue-router'
-import AuthView from "../views/AuthView.vue"
-import HomeView from "../views/HomeView.vue"
-
-Vue.use(VueRouter)
+import Vue from "vue";
+import VueRouter from "vue-router";
+Vue.use(VueRouter);
 
 const routes = [
   {
-    path: '/',
-    name: 'AuthMain',
-    component: AuthView
+    path: "*",
+    redirect: { name: "feed" },
   },
   {
-    path: '/home',
-    name: 'HomeView',
-    component: HomeView
-  }
-]
+    path: "/",
+    name: "authMain",
+    component: () => import("../layouts/AuthLayout.vue"),
+  },
+  {
+    path: "/home",
+    name: "home",
+    component: () => import("../layouts/HomeLayout.vue"),
+    children: [
+      {
+        path: "feed",
+        name: "feed",
+        component: () => import("../pages/home/HomePage.vue"),
+      },
+      {
+        path: "profile",
+        name: "profile",
+        component: () => import("../pages/home/ProfilePage.vue"),
+      },
+    ],
+  },
+  {
+    path: "/admin",
+    name: "admin",
+    component: () => import("../layouts/AdminLayout.vue"),
+    children: [
+      {
+        path: "dashboard",
+        name: "dashboard",
+        component: () => import("../pages/admin/DashboadPage.vue"),
+      },
+      {
+        path: "users",
+        name: "users",
+        component: () => import("../pages/admin/UsersPage.vue"),
+      },
+      {
+        path: "profile-admin",
+        name: "profile-admin",
+        component: () => import("../pages/admin/ProfileAdminPage.vue"),
+      },
+    ],
+  },
+];
 
 const router = new VueRouter({
   mode: "history",
-  routes
-})
+  routes,
+});
 
-export default router
+export default router;
